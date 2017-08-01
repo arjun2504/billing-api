@@ -35,7 +35,12 @@ class StockController extends Controller
     	return response()->json( $stock, 200);
     }
 
-    public function all() {
+    public function all(Request $request) {
+    	if($request->stock == 1) {
+    		$stocked = Stock::where('is_available','=','1')->get();
+    		return response()->json($stocked, 200);
+    	}
+
     	return response()->json( Stock::all(), 200);
     }
 
