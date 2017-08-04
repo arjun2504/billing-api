@@ -18,17 +18,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::prefix('stock')->group(function() {
-	
 	Route::post('add', 'StockController@add');
-
 	// Route::post('edit/{id}', 'StockController@edit');
-
 	Route::post('update/{id}', 'StockController@update');
-
 	Route::get('item/{id}', 'StockController@show');
-
 	Route::get('all', 'StockController@all');
-
 	Route::post('delete', 'StockController@delete');
+});
 
+Route::prefix('invoice')->group(function() {
+	Route::post('save', 'InvoiceController@save');
+	Route::get('id/{id}', 'InvoiceController@get');
+	Route::post('update/{id}', 'InvoiceController@update');
+	Route::get('all', 'InvoiceController@all');
+	Route::post('hide', 'InvoiceController@hide');
+	Route::get('next', 'InvoiceController@next');
 });
