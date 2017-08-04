@@ -14,12 +14,13 @@ class CreateInvoicesTable extends Migration
     public function up()
     {
         Schema::create('invoices', function(Blueprint $table) {
-            $table->increments('id')->index();
+            $table->bigIncrements('id')->index();
             $table->float('sale');
             $table->float('total_gst');
             $table->float('total');
-            $table->enum('hide', ['1','0'])->default('0');
+            //$table->enum('hide', ['1','0'])->default('0');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
