@@ -38,6 +38,8 @@ class InvoiceController extends Controller
           $product->amount = $request->products[$i]['amount'];
           $product->amount_gst = $request->products[$i]['amount_gst'];
           $product->invoice_id = $request->bid;
+          $product->sgst = $request->products[$i]['sgst'];
+          $product->cgst = $request->products[$i]['cgst'];
           try {
             $product->save();
           } catch(\Exception $e) {
@@ -53,5 +55,36 @@ class InvoiceController extends Controller
       $last_row = Invoice::select('id')->orderBy('created_at','desc')->first();
       $id = empty($last_row) ? 1 : $last_row->id + 1;
       return response()->json(['next' => $id], 200);
+    }
+
+    public function all() {
+    	return response()->json( Invoice::orderBy('created_at', 'desc')->paginate(50), 200);
+    }
+
+    public function get(Request $request, $id) {
+    	$invoice = Invoice::find($id);
+    	$invoice = empty($invoice) ? null : array($invoice);
+    	return response()->json( [ 'data' => $invoice ], 200);
+    }
+
+    public function getProducts(Request $request, $id) {
+    	$products = Product::where('invoice_id', '=', $id)->get();
+    	return response()->json( $products, 200 );
+    }
+
+    public function daterange(Request $request, $from, $to) {
+    	$from = date("Y-m-d 00:00:00", strtotime($from));
+    	$to = date("Y-m-d 23:59:59", strtotime($to));
+    	$invoice = Invoice::whereBetween('created_at', array($from, $to))->orderBy('created_at', 'desc')->paginate(50);
+    	//$invoice = empty($invoice) ? null : $invoice;
+    	return response()->json( $invoice, 200);
+    }
+
+    public function delete(Request $request) {
+    	for($i=0;$i<count($request->items);$i++) {
+    		$invoice = Invoice::find($request->items[$i]);
+    		$invoice->delete();
+    	}
+    	return response()->json( ['status' => 'success'], 200);
     }
 }

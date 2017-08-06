@@ -31,6 +31,13 @@ Route::prefix('invoice')->group(function() {
 	Route::get('id/{id}', 'InvoiceController@get');
 	Route::post('update/{id}', 'InvoiceController@update');
 	Route::get('all', 'InvoiceController@all');
-	Route::post('hide', 'InvoiceController@hide');
+	Route::post('delete', 'InvoiceController@delete');
 	Route::get('next', 'InvoiceController@next');
+	Route::get('range/{from}/{to}', 'InvoiceController@daterange');
+	Route::get('products/{id}', 'InvoiceController@getProducts');
+});
+
+Route::prefix('option')->group(function() {
+	Route::get('all', 'OptionController@all');
+	Route::post('save', 'OptionController@save');
 });

@@ -15,9 +15,9 @@ class CreateInvoicesTable extends Migration
     {
         Schema::create('invoices', function(Blueprint $table) {
             $table->bigIncrements('id')->index();
-            $table->float('sale');
-            $table->float('total_gst');
-            $table->float('total');
+            $table->float('sale',20,2);
+            $table->float('total_gst',20,2);
+            $table->float('total',20,2);
             //$table->enum('hide', ['1','0'])->default('0');
             $table->timestamps();
             $table->softDeletes();
