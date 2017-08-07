@@ -41,3 +41,17 @@ Route::prefix('option')->group(function() {
 	Route::get('all', 'OptionController@all');
 	Route::post('save', 'OptionController@save');
 });
+
+Route::get('test', function() {
+  $db = 0;
+  try {
+    DB::connection()->getPdo();
+    if(DB::connection()->getDatabaseName()) {
+      return response()->json( [ 'connection' => 'success', 'database' => 'success'], 200);
+    }
+  }
+  catch(\Exception $e) {
+      return response()->json([ 'connection' => 'success', 'database' => 'error'], 406);
+  }
+
+});
