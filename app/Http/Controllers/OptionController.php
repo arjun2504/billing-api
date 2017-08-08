@@ -20,7 +20,13 @@ class OptionController extends Controller
       $options = Option::select('key','value')->whereIn('key', ['company_name', 'address', 'tin', 'gstin'])->orWhere('key','like','custom_text_%')->get();
       $option_arr = [];
     	foreach($options as $o) {
-    		$options_arr[$o->key] = $o->value;
+    		$val = $o->value;
+    		if($o->key == 'gstin') {
+    			$val = "GSTIN: ".$o->value;
+    		} else if($o->key == 'tin') {
+    			$val = "TIN: ".$o->value;
+    		}
+    		$options_arr[$o->key] = $val;
     	}
     	return response()->json( $options_arr, 200);
     }
