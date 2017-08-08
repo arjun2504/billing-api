@@ -40,10 +40,14 @@ Route::prefix('invoice')->group(function() {
 Route::prefix('option')->group(function() {
 	Route::get('all', 'OptionController@all');
 	Route::post('save', 'OptionController@save');
+  Route::get('template', 'OptionController@template');
+  Route::post('custom-text/save', 'OptionController@saveCustom');
+  Route::get('custom-text/get', 'OptionController@getCustom');
+  Route::post('hf/save', 'OptionController@saveHF');
+  Route::get('hf/get', 'OptionController@getHF');
 });
 
 Route::get('test', function() {
-  $db = 0;
   try {
     DB::connection()->getPdo();
     if(DB::connection()->getDatabaseName()) {
