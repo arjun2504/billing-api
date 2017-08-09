@@ -10,6 +10,6 @@ class Invoice extends Model
     use SoftDeletes;
     protected $dates = ['deleted_at'];
     protected $table = 'invoices';
-    protected $fillable = ['id', 'sale', 'total_gst', 'total'];
+    protected $fillable = ['id', 'sale', 'total_gst', 'total', 'day_seq'];
 
 }

@@ -17,6 +17,7 @@ class InvoiceController extends Controller
     	$invoice->sale = $request->total;
     	$invoice->total_gst = $request->total_gst;
     	$invoice->total = $request->total_roff;
+    	$invoice->day_seq = $request->day_seq;
 
     	try {
     		$invoice->save();
@@ -53,7 +54,7 @@ class InvoiceController extends Controller
 
     public function next() {
       $last_row = Invoice::select('id')->orderBy('created_at','desc')->first();
-      $id = empty($last_row) ? 1 : $last_row->id + 1;
+      $id = empty($last_row) ? 1 : $last_row->id + 1;      
       return response()->json(['next' => $id], 200);
     }
 
